@@ -95,7 +95,7 @@ function inViewDirective ($parse) {
         var elementRect = offsetRect(element[0].getBoundingClientRect(), options.offset);
         var isVisible = !!(element[0].offsetWidth || element[0].offsetHeight || element[0].getClientRects().length);
         var info = {
-          inView: isVisible && intersectRect(elementRect, viewportRect),
+          inView: isVisible && !element[0].classList.contains("ng-hide") && intersectRect(elementRect, viewportRect),
           event: event,
           element: element,
           elementRect: elementRect,

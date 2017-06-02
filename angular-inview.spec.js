@@ -37,6 +37,26 @@ describe("angular-inview", function() {
 			.then(done);
 		});
 
+		it("should not trigger in-view expression if ng-hide present and set to true", function(done) {
+			makeTestForHtml(
+				'<div in-view="spy($inview)" ng-hide="true"></div>'
+			)
+			.then(function (test) {
+				expect(test.spy.calls.count()).toBe(0);
+			})
+			.then(done);
+		});
+
+		it("should not trigger in-view expression if ng-hide present and set to false", function(done) {
+			makeTestForHtml(
+				'<div in-view="spy($inview)" ng-hide="false"></div>'
+			)
+			.then(function (test) {
+				expect(test.spy.calls.count()).toBe(1);
+			})
+			.then(done);
+		});
+
 		it("should change inview status when scrolling out of view", function(done) {
 			makeTestForHtml(
 				'<div in-view="spy($inview)"></div>' +
@@ -306,7 +326,7 @@ describe("angular-inview", function() {
 	//
 	//  - `element`: An angular element inserted in the test page
 	//  - `scope`: a new isolated scope that can be referenced in the element
-	//  - `spy`: a conveninence jasmine spy attached to the scope as `spy`
+	//  - `spy`: a convenience jasmine spy attached to the scope as `spy`
 	function makeTestForHtml(html) {
 		var test = {};
 		// Prepare test elements
